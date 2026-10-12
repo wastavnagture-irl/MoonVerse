@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Romantic MoonVerse — An Ethereal Ocean of Love</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background-color: #010206;
+            user-select: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #fff;
+        }
+
+        canvas.webgl {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            outline: none;
+            z-index: 1;
+        }
+
+        #cursorCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* ── Romantic Cinematic Vignette ── */
+        .cinematic-vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 8;
+            background: radial-gradient(circle at center, transparent 35%, rgba(1, 2, 6, 0.5) 75%, rgba(1, 2, 6, 0.94) 100%);
+        }
+
+        /* ── Loading Screen ── */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #0c1020 0%, #010206 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .loader-moon {
+            font-size: 38px;
+            animation: moonPulse 2.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 24px rgba(210, 230, 255, 0.9));
+            margin-bottom: 20px;
+        }
+
+        .loader-title {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #f0f4ff;
+            text-shadow: 0 0 16px rgba(180, 210, 255, 0.7);
+            margin-bottom: 6px;
+        }
+
+        .loader-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            font-style: italic;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: rgba(200, 220, 255, 0.85);
+        }
+
+        @keyframes moonPulse {
+            0%, 100% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.1) translateY(-6px); }
+        }
+
+        /* ── Romantic Floating Constellation Poetry (Screen Dead Center) ── */
+        .poetry-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(680px, calc(100vw - 48px));
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-aura {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            width: 140%;
+            height: 160%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(140, 205, 255, 0.45) 0%, rgba(180, 150, 255, 0.25) 38%, rgba(100, 160, 255, 0.08) 65%, rgba(0, 0, 0, 0) 80%);
+            filter: blur(35px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.4s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: -1;
+        }
+
+        .card-aura.pulse {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.32);
+        }
+
+        .poetry-card {
+            position: relative;
+            width: 100%;
+            background: rgba(6, 12, 26, 0.74);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(210, 230, 255, 0.32);
+            border-bottom: 2px solid rgba(220, 235, 255, 0.9);
+            padding: 28px 38px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 45px rgba(120, 180, 255, 0.25);
+            transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease;
+            text-align: center;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .poetry-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: #cde4ff;
+            text-shadow: 0 0 12px rgba(180, 215, 255, 0.6);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .poetry-tag::before,
+        .poetry-tag::after {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: rgba(200, 225, 255, 0.75);
+        }
+
+        .poetry-main {
+            font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(25px, 3.8vw, 36px);
+            font-weight: 600;
+            font-style: italic;
+            letter-spacing: 0.2px;
+            color: #ffffff;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.95), 0 0 20px rgba(180, 220, 255, 0.6);
+            margin-bottom: 10px;
+            line-height: 1.35;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .poetry-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(15px, 2.1vw, 19px);
+            font-weight: 500;
+            letter-spacing: 0.8px;
+            color: rgba(225, 240, 255, 0.95);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+            line-height: 1.45;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .poetry-container {
+                width: calc(100vw - 32px);
+            }
+            .poetry-card {
+                padding: 20px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Three.js Canvas -->
+    <canvas class="webgl"></canvas>
+
+    <!-- 2D Overlay Canvas for Cursor Stardust -->
+    <canvas id="cursorCanvas"></canvas>
+
+    <!-- Cinematic Vignette -->
+    <div class="cinematic-vignette"></div>
+
+    <!-- Loading screen -->
+    <div id="loader">
+        <div class="loader-moon">🌙</div>
+        <div class="loader-title">Awakening Romantic MoonVerse</div>
+        <div class="loader-sub">Where moonlight touches the quiet sea...</div>
+    </div>
+
+    <!-- Poetry Card (Centered) -->
+    <main class="poetry-container">
+        <div class="card-aura" id="cardAura"></div>
+        <div class="poetry-card" id="poetryCard">
+            <div class="poetry-tag" id="poetryTag">Moonlit Whispers</div>
+            <div class="poetry-main" id="poemMain">Just like the moon illuminates the night...</div>
+            <div class="poetry-sub" id="poemSub">You are the serene light my heart follows forever.</div>
+        </div>
+    </main>
+
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { Water } from 'three/addons/objects/Water.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+        // ════════════════════════════════════════════
+        //  GLOBAL STATE & CONFIGURATION
+        // ════════════════════════════════════════════
+        const canvas = document.querySelector('canvas.webgl');
+        const cCanvas = document.getElementById('cursorCanvas');
+        const cCtx = cCanvas.getContext('2d');
+
+        let scene, camera, renderer, composer, controls, water;
+        let ambientLight, moonLight, horizonSprite;
+        let moonSprite, moonGlowSprite, brightStarSprite;
+        let starShaderMat, auroraMesh, shootingStars = [];
+        let lanterns = [], floatingPetalsPoints;
+        let clock = new THREE.Clock();
+
+        let isTourActive = true;
+        let tourProgress = 0;
+        let lookTarget = new THREE.Vector3(400, 600, -3800);
+
+        let targetMoonScale = 3100;
+        let targetCamZ = 220;
+        let waterSpeedFactor = 1.0;
+
+        // ════════════════════════════════════════════
+        //  CELESTIAL REALMS (ATMOSPHERIC BACKGROUNDS)
+        // ════════════════════════════════════════════
+        const celestialRealms = [
+            {
+                tag: "The Giant Moonlit Horizon",
+                bg: new THREE.Color(0x021535),
+                fog: new THREE.Color(0x031a42),
+                moon: new THREE.Color(0xd8eeff),
+                ambient: new THREE.Color(0x182a4d),
+                waterColor: new THREE.Color(0x011a42),
+                sunColor: new THREE.Color(0xe6f4ff),
+                auraGrad: 'radial-gradient(circle, rgba(140, 205, 255, 0.45) 0%, rgba(180, 150, 255, 0.25) 38%, rgba(0, 0, 0, 0) 80%)',
+                stardustHue: 205,
+                moonPos: new THREE.Vector3(300, 950, -2800),
+                moonScale: 2900,
+                auroraIntensity: 0.05,
+                petalSize: 6.0,
+                petalOpacity: 0.2,
+                camPosX: 0,
+                camPosY: 32,
+                camPosZ: 240,
+                camLookX: 300,
+                camLookY: 500,
+                camLookZ: -3000,
+                eventType: 'giant_moon'
+            },
+            {
+                tag: "Drifting Wish Lanterns",
+                bg: new THREE.Color(0x2b1304),
+                fog: new THREE.Color(0x381905),
+                moon: new THREE.Color(0xffd37a),
+                ambient: new THREE.Color(0x47260d),
+                waterColor: new THREE.Color(0x2e1403),
+                sunColor: new THREE.Color(0xffe299),
+                auraGrad: 'radial-gradient(circle, rgba(255, 195, 110, 0.45) 0%, rgba(255, 130, 70, 0.25) 38%, rgba(0, 0, 0, 0) 80%)',
+                stardustHue: 38,
+                moonPos: new THREE.Vector3(1800, 1600, -3600),
+                moonScale: 2450,
+                auroraIntensity: 0.05,
+                petalSize: 6.0,
+                petalOpacity: 0.2,
+                camPosX: 480,
+                camPosY: 55,
+                camPosZ: 360,
+                camLookX: 950,
+                camLookY: 1100,
+                camLookZ: -1600,
+                eventType: 'lantern_festival'
+            },
+            {
+                tag: "Celestial Aurora Borealis Curtain",
+                bg: new THREE.Color(0x022e2a),
+                fog: new THREE.Color(0x033b36),
+                moon: new THREE.Color(0x94ffec),
+                ambient: new THREE.Color(0x0e4742),
+                waterColor: new THREE.Color(0x02332e),
+                sunColor: new THREE.Color(0xa8fff2),
+                auraGrad: 'radial-gradient(circle, rgba(80, 255, 210, 0.45) 0%, rgba(40, 180, 220, 0.25) 38%, rgba(0, 0, 0, 0) 80%)',
+                stardustHue: 168,
+                moonPos: new THREE.Vector3(1200, 2200, -3700),
+                moonScale: 2500,
+                auroraIntensity: 1.25,
+                petalSize: 6.0,
+                petalOpacity: 0.2,
+                camPosX: -420,
+                camPosY: 115,
+                camPosZ: 280,
+                camLookX: -100,
+                camLookY: 1800,
+                camLookZ: -2200,
+                eventType: 'aurora'
+            },
+            {
+                tag: "Cosmic Rose Petal Storm",
+                bg: new THREE.Color(0x330822),
+                fog: new THREE.Color(0x400a2b),
+                moon: new THREE.Color(0xffb8cb),
+                ambient: new THREE.Color(0x54183a),
+                waterColor: new THREE.Color(0x360824),
+                sunColor: new THREE.Color(0xffd1df),
+                auraGrad: 'radial-gradient(circle, rgba(255, 140, 170, 0.45) 0%, rgba(255, 180, 130, 0.25) 38%, rgba(0, 0, 0, 0) 80%)',
+                stardustHue: 340,
+                moonPos: new THREE.Vector3(1600, 1400, -3400),
+                moonScale: 2500,
+                auroraIntensity: 0.08,
+                petalSize: 13.0,
+                petalOpacity: 0.9,
+                camPosX: 360,
+                camPosY: 58,
+                camPosZ: 420,
+                camLookX: -200,
+                camLookY: 480,
+                camLookZ: -1900,
+                eventType: 'petal_storm'
+            },
+            {
+                tag: "Blazing Meteor Starfall",
+                bg: new THREE.Color(0x05104a),
+                fog: new THREE.Color(0x08175e),
+                moon: new THREE.Color(0xbdd5ff),
+                ambient: new THREE.Color(0x16266b),
+                waterColor: new THREE.Color(0x061454),
+                sunColor: new THREE.Color(0xd6e5ff),
+                auraGrad: 'radial-gradient(circle, rgba(120, 170, 255, 0.45) 0%, rgba(70, 110, 255, 0.25) 38%, rgba(0, 0, 0, 0) 80%)',
+                stardustHue: 225,
+                moonPos: new THREE.Vector3(600, 1100, -3000),
+                moonScale: 2800,
+                auroraIntensity: 0.1,
+                petalSize: 6.0,
+                petalOpacity: 0.2,
+                camPosX: -360,
+                camPosY: 30,
+                camPosZ: 220,
+                camLookX: 600,
+                camLookY: 900,
+                camLookZ: -2800,
+                eventType: 'meteor_shower'
+            },
+            {
+                tag: "Twilight Violet & Milky Way",
+                bg: new THREE.Color(0x22073d),
+                fog: new THREE.Color(0x2c094f),
+                moon: new THREE.Color(0xecb8ff),
+                ambient: new THREE.Color(0x43196e),
+                waterColor: new THREE.Color(0x240742),
+                sunColor: new THREE.Color(0xf5d4ff),
+                auraGrad: 'radial-gradient(circle, rgba(200, 130, 255, 0.45) 0%, rgba(130, 90, 255, 0.25) 38%, rgba(0, 0, 0, 0) 80%)',
+                stardustHue: 275,
+                moonPos: new THREE.Vector3(1400, 1700, -3700),
+                moonScale: 2550,
+                auroraIntensity: 0.12,
+                petalSize: 6.0,
+                petalOpacity: 0.2,
+                camPosX: -50,
+                camPosY: 90,
+                camPosZ: 430,
+                camLookX: 200,
+                camLookY: 700,
+                camLookZ: -3600,
+                eventType: 'twilight_crescent'
+            }
+        ];
+        let currentRealm = celestialRealms[0];
+
+        // ════════════════════════════════════════════
+        //  POETRY TIMELINE (ROMANTIC ENGLISH)
+        // ════════════════════════════════════════════
+        const poems = [
+            {
+                main: "Just like the moon illuminates the night...",
+                sub: "You are the serene light my heart follows forever."
+            },
+            {
+                main: "Across the quiet ocean of our dreams...",
+                sub: "Every silver wave carries a whisper of your love."
+            },
+            {
+                main: "Under this vast, star-dusted sky...",
+                sub: "Out of billions of souls, mine found its home in yours."
+            },
+            {
+                main: "Like lanterns rising into eternity...",
+                sub: "My sweetest wishes always drift straight toward you."
+            },
+            {
+                main: "Forever gentle, forever true...",
+                sub: "As long as the moon pulls the tides, I will love you."
+            },
+            {
+                main: "In the silence between heartbeats...",
+                sub: "Your name is the only melody that echoes."
+            },
+            {
+                main: "Two souls dancing on moonlit water...",
+                sub: "Bound together by starlight that never fades."
+            },
+            {
+                main: "Even in the deepest darkness...",
+                sub: "The thought of your smile turns the night to dawn."
+            },
+            {
+                main: "Written in the constellations above...",
+                sub: "Every falling star was a wish for your happiness."
+            },
+            {
+                main: "Endless as the cosmic sea...",
+                sub: "Every moment with you is my favourite paradise."
+            }
+        ];
+        let currentPoemIndex = 0;
+        const poemMainEl = document.getElementById('poemMain');
+        const poemSubEl = document.getElementById('poemSub');
+        const poetryCard = document.getElementById('poetryCard');
+
+        // ════════════════════════════════════════════
+        //  SYNCHRONIZED BACKGROUND TRANSITIONS
+        // ════════════════════════════════════════════
+        function triggerStardustShockwave(realm) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const count = 48;
+            const baseHue = (realm && realm.stardustHue !== undefined) ? realm.stardustHue : 205;
+            for (let i = 0; i < count; i++) {
+                const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.15;
+                const speed = 2.8 + Math.random() * 4.2;
+                cursorParticles.push({
+                    x: cx + Math.cos(angle) * 70,
+                    y: cy + Math.sin(angle) * 35,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed * 0.65 - 0.4,
+                    size: 2.5 + Math.random() * 4.0,
+                    hue: (baseHue + (Math.random() - 0.5) * 35 + 360) % 360,
+                    life: 1.0,
+                    decay: 0.014 + Math.random() * 0.01
+                });
+            }
+        }
+
+        function playTransitionChime() {
+            if (!isAudioPlaying || !audioCtx) return;
+            try {
+                const now = audioCtx.currentTime;
+                const chimeNotes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 arpeggio
+                chimeNotes.forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                    gain.gain.setValueAtTime(0.0001, now + idx * 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.025, now + idx * 0.08 + 0.03);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 1.6);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now + idx * 0.08);
+                    osc.stop(now + idx * 0.08 + 1.7);
+                });
+            } catch (e) {}
+        }
+
+        function triggerTransitionEffects(realm) {
+            if (!realm) return;
+
+            // 1. Synchronized Camera Zoom & Moon Scale Targets tied to this poem
+            targetCamZ = realm.camDist || 300;
+            targetMoonScale = realm.moonScale || 2800;
+
+            // 2. Gentle ripple speed adjustment on water
+            waterSpeedFactor = 1.25;
+
+            // 3. Unique, prominent physical phenomenon for this realm:
+            if (realm) {
+                if (realm.eventType === 'lantern_festival') {
+                    // Just 3 gentle wish lanterns rising peacefully
+                    for (let i = 0; i < 3; i++) {
+                        setTimeout(() => {
+                            const rx = (Math.random() - 0.5) * 600;
+                            const ry = 8 + Math.random() * 30;
+                            const rz = -200 - Math.random() * 400;
+                            spawnWishLantern(rx, ry, rz);
+                        }, i * 350);
+                    }
+                } else if (realm.eventType === 'meteor_shower') {
+                    // Brilliant blazing meteor shower barrage!
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => spawnShootingStar(), i * 300);
+                    }
+                } else if (realm.eventType === 'petal_storm') {
+                    // Dense swirling sakura / rose petals right around the camera!
+                    if (floatingPetalsPoints) {
+                        const pos = floatingPetalsPoints.geometry.attributes.position.array;
+                        for (let i = 0; i < 250; i++) {
+                            pos[i * 3] = (Math.random() - 0.5) * 550;
+                            pos[i * 3 + 1] = 15 + Math.random() * 110;
+                            pos[i * 3 + 2] = 120 - Math.random() * 600;
+                        }
+                        floatingPetalsPoints.geometry.attributes.position.needsUpdate = true;
+                    }
+                    spawnShootingStar();
+                } else {
+                    // Standard shooting star streak and 1 gentle lantern
+                    spawnShootingStar();
+                    setTimeout(() => spawnShootingStar(), 500);
+                    setTimeout(() => {
+                        const spreadX = (Math.random() - 0.5) * 900;
+                        const spreadZ = -300 - Math.random() * 600;
+                        spawnWishLantern(spreadX, 6, spreadZ);
+                    }, 400);
+                }
+            }
+
+            // 4. Screen-wide stardust shockwave burst matching realm color
+            triggerStardustShockwave(realm);
+
+            // 5. Card glowing aura pulse with realm gradient
+            const aura = document.getElementById('cardAura');
+            if (aura) {
+                if (realm && realm.auraGrad) aura.style.background = realm.auraGrad;
+                aura.classList.add('pulse');
+                setTimeout(() => aura.classList.remove('pulse'), 2500);
+            }
+
+            // 6. Celestial chime note if audio active
+            playTransitionChime();
+        }
+
+        let isPoemTransitioning = false;
+        function updatePoem(index) {
+            if (isPoemTransitioning) return;
+            isPoemTransitioning = true;
+
+            // Graceful, smooth, elegant fade out
+            poetryCard.style.opacity = '0';
+            poetryCard.style.transform = 'scale(0.97) translateY(-4px)';
+            poetryCard.style.filter = 'blur(6px)';
+
+            setTimeout(() => {
+                const p = poems[index % poems.length];
+                currentRealm = celestialRealms[index % celestialRealms.length];
+
+                poemMainEl.textContent = p.main;
+                poemSubEl.textContent = p.sub;
+
+                const tagEl = document.getElementById('poetryTag');
+                if (tagEl) tagEl.textContent = currentRealm.tag;
+
+                // Fire synchronized background visuals
+                triggerTransitionEffects(currentRealm);
+
+                // Graceful, smooth, elegant fade in
+                poetryCard.style.opacity = '1';
+                poetryCard.style.transform = 'scale(1) translateY(0)';
+                poetryCard.style.filter = 'blur(0px)';
+                
+                setTimeout(() => {
+                    isPoemTransitioning = false;
+                }, 600);
+
+                // Perfect balanced 4.2 seconds reading time before transitioning to the next poem
+                scheduleNextPoem();
+            }, 450);
+        }
+
+        let poemTimer = null;
+        function scheduleNextPoem() {
+            if (poemTimer) clearTimeout(poemTimer);
+            poemTimer = setTimeout(() => {
+                currentPoemIndex++;
+                updatePoem(currentPoemIndex);
+            }, 4200);
+        }
+        scheduleNextPoem();
+
+        // Also allow clicking the poetry card to immediately cycle to the next romantic quote
+        poetryCard.addEventListener('pointerdown', (e) => {
+            e.stopPropagation();
+            if (poemTimer) clearTimeout(poemTimer);
+            currentPoemIndex++;
+            updatePoem(currentPoemIndex);
+        });
+
+        // ════════════════════════════════════════════
+        //  ETHEREAL ROMANTIC AMBIENT AUDIO
+        // ════════════════════════════════════════════
+        let audioCtx = null;
+        let isAudioPlaying = false;
+        let audioTimer = null;
+
+        // Romantic piano / harp chords: Cmaj9, G6, Am9, Fmaj7
+        const romanticChords = [
+            [261.63, 329.63, 392.00, 493.88, 523.25], // Cmaj9
+            [196.00, 246.94, 293.66, 392.00, 440.00], // G6
+            [220.00, 261.63, 329.63, 392.00, 493.88], // Am9
+            [174.61, 220.00, 261.63, 329.63, 392.00]  // Fmaj7
+        ];
+        let currentChordIndex = 0;
+
+        function initAudio() {
+            if (audioCtx) return;
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContext();
+        }
+
+        function playRomanticMelody() {
+            if (!isAudioPlaying || !audioCtx) return;
+
+            const now = audioCtx.currentTime;
+            const chord = romanticChords[currentChordIndex % romanticChords.length];
+            currentChordIndex++;
+
+            chord.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const filter = audioCtx.createBiquadFilter();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(950, now);
+
+                const timeOffset = i * 0.28;
+                gain.gain.setValueAtTime(0.0001, now + timeOffset);
+                gain.gain.exponentialRampToValueAtTime(0.045, now + timeOffset + 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + timeOffset + 3.8);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now + timeOffset);
+                osc.stop(now + timeOffset + 4.0);
+            });
+
+            audioTimer = setTimeout(playRomanticMelody, 3800);
+        }
+
+        let audioStarted = false;
+        function tryStartAudio() {
+            if (audioStarted) return;
+            initAudio();
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            isAudioPlaying = true;
+            playRomanticMelody();
+            audioStarted = true;
+        }
+        window.addEventListener('pointerdown', tryStartAudio, { once: true });
+
+        // ════════════════════════════════════════════
+        //  CREATE CRESCENT MOON & HORIZON
+        // ════════════════════════════════════════════
+        function createMoonAndSky() {
+            // 1. Horizon warm sunset/moonrise glow
+            const horizonCanvas = document.createElement('canvas');
+            horizonCanvas.width = 1024;
+            horizonCanvas.height = 512;
+            const hCtx = horizonCanvas.getContext('2d');
+            const hGrad = hCtx.createLinearGradient(0, 512, 0, 0);
+            hGrad.addColorStop(0, 'rgba(255, 160, 80, 0.45)');
+            hGrad.addColorStop(0.2, 'rgba(120, 60, 140, 0.25)');
+            hGrad.addColorStop(0.5, 'rgba(15, 25, 60, 0.1)');
+            hGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            hCtx.fillStyle = hGrad;
+            hCtx.fillRect(0, 0, 1024, 512);
+
+            const horizonMat = new THREE.SpriteMaterial({
+                map: new THREE.CanvasTexture(horizonCanvas),
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+            horizonSprite = new THREE.Sprite(horizonMat);
+            horizonSprite.scale.set(30000, 5500, 1);
+            horizonSprite.position.set(0, 1200, -8000);
+            scene.add(horizonSprite);
+
+            // 2. High-Definition Glowing Crescent Moon
+            const moonCanvas = document.createElement('canvas');
+            moonCanvas.width = 512;
+            moonCanvas.height = 512;
+            const mCtx = moonCanvas.getContext('2d');
+
+            // Outer ethereal moonlight halo
+            const mGlow = mCtx.createRadialGradient(256, 256, 120, 256, 256, 256);
+            mGlow.addColorStop(0, 'rgba(230, 245, 255, 0.55)');
+            mGlow.addColorStop(0.6, 'rgba(170, 210, 255, 0.25)');
+            mGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            mCtx.fillStyle = mGlow;
+            mCtx.fillRect(0, 0, 512, 512);
+
+            // Solid moon disk
+            mCtx.fillStyle = '#ffffff';
+            mCtx.beginPath();
+            mCtx.arc(256, 256, 190, 0, Math.PI * 2);
+            mCtx.fill();
+
+            // Crescent cut out
+            mCtx.globalCompositeOperation = 'destination-out';
+            mCtx.beginPath();
+            mCtx.arc(205, 205, 185, 0, Math.PI * 2);
+            mCtx.fill();
+            mCtx.globalCompositeOperation = 'source-over';
+
+            const moonMat = new THREE.SpriteMaterial({
+                map: new THREE.CanvasTexture(moonCanvas),
+                transparent: true,
+                color: new THREE.Color(1.8, 2.0, 2.3),
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+            moonSprite = new THREE.Sprite(moonMat);
+            moonSprite.scale.set(2850, 2850, 1);
+            moonSprite.position.set(400, 950, -2800);
+            moonMat.rotation = Math.PI / 6.5;
+            scene.add(moonSprite);
+
+            // 3. Moon Soft Ethereal Glow Aura
+            const auraCanvas = document.createElement('canvas');
+            auraCanvas.width = 512; auraCanvas.height = 512;
+            const aCtx = auraCanvas.getContext('2d');
+            const aGlow = aCtx.createRadialGradient(256, 256, 0, 256, 256, 256);
+            aGlow.addColorStop(0, 'rgba(180, 215, 255, 0.7)');
+            aGlow.addColorStop(0.3, 'rgba(130, 180, 255, 0.3)');
+            aGlow.addColorStop(0.7, 'rgba(80, 140, 255, 0.08)');
+            aGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            aCtx.fillStyle = aGlow;
+            aCtx.fillRect(0, 0, 512, 512);
+
+            const auraMat = new THREE.SpriteMaterial({
+                map: new THREE.CanvasTexture(auraCanvas),
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+            moonGlowSprite = new THREE.Sprite(auraMat);
+            moonGlowSprite.scale.set(3800, 3800, 1);
+            moonGlowSprite.position.copy(moonSprite.position);
+            scene.add(moonGlowSprite);
+
+            // 4. Romantic Bright Guiding Star
+            const brightStar = new THREE.Sprite(auraMat);
+            brightStar.scale.set(850, 850, 1);
+            brightStar.position.set(-2000, 1500, -5200);
+            scene.add(brightStar);
+        }
+
+        // ════════════════════════════════════════════
+        //  TWINKLING MILKY WAY STARS
+        // ════════════════════════════════════════════
+        function createStars() {
+            const starsGeo = new THREE.BufferGeometry();
+            const starsCount = 18000;
+            const posArray = new Float32Array(starsCount * 3);
+            const sizesArray = new Float32Array(starsCount);
+            const colorsArray = new Float32Array(starsCount * 3);
+
+            for (let i = 0; i < starsCount; i++) {
+                let x, y, z;
+
+                if (i < 6500) {
+                    // Arching Milky Way band
+                    const mx = (Math.random() - 0.5) * 18000;
+                    const my = (Math.random() - 0.5) * 4500;
+                    const angle = Math.PI / 3.5;
+                    x = mx * Math.cos(angle) - my * Math.sin(angle) - 1500;
+                    y = mx * Math.sin(angle) + my * Math.cos(angle) + 2600;
+                    z = -4500 - Math.random() * 4000;
+
+                    colorsArray[i * 3] = 0.6 + Math.random() * 0.4;
+                    colorsArray[i * 3 + 1] = 0.8 + Math.random() * 0.2;
+                    colorsArray[i * 3 + 2] = 1.0;
+                } else {
+                    // Surrounding celestial dome
+                    const r = 6500 + Math.random() * 5000;
+                    const theta = 2 * Math.PI * Math.random();
+                    const phi = Math.acos((Math.random() * 2) - 1);
+                    x = r * Math.sin(phi) * Math.cos(theta);
+                    y = Math.abs(r * Math.cos(phi)) + 80;
+                    z = r * Math.sin(phi) * Math.sin(theta);
+
+                    colorsArray[i * 3] = 0.95;
+                    colorsArray[i * 3 + 1] = 0.95;
+                    colorsArray[i * 3 + 2] = 1.0;
+                }
+
+                posArray[i * 3] = x;
+                posArray[i * 3 + 1] = y;
+                posArray[i * 3 + 2] = z;
+                sizesArray[i] = 1.2 + Math.random() * 4.5;
+            }
+
+            starsGeo.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+            starsGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            starsGeo.setAttribute('aSize', new THREE.BufferAttribute(sizesArray, 1));
+
+            starShaderMat = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    attribute float aSize;
+                    attribute vec3 color;
+                    varying float vAlpha;
+                    varying vec3 vColor;
+                    uniform float time;
+                    void main() {
+                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        gl_Position = projectionMatrix * mvPosition;
+                        gl_PointSize = aSize * (380.0 / -mvPosition.z);
+                        vAlpha = 0.4 + 0.6 * sin(time * 1.8 + position.x * 120.0 + position.y * 30.0);
+                        vColor = color;
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vColor;
+                    varying float vAlpha;
+                    void main() {
+                        float dist = length(gl_PointCoord - vec2(0.5));
+                        if (dist > 0.5) discard;
+                        gl_FragColor = vec4(vColor, vAlpha * (1.0 - dist * 2.0));
+                    }
+                `,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+
+            const starsMesh = new THREE.Points(starsGeo, starShaderMat);
+            scene.add(starsMesh);
+        }
+
+        // ════════════════════════════════════════════
+        //  CELESTIAL AURORA BOREALIS CURTAIN
+        // ════════════════════════════════════════════
+        function createAurora() {
+            const auroraGeo = new THREE.CylinderGeometry(7600, 9000, 2800, 180, 80, true);
+            const auroraMat = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 },
+                    uIntensity: { value: 0.1 }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    varying float vHeightFactor;
+                    uniform float time;
+                    
+                    float hash(vec2 p) {
+                        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+                    }
+                    float noise(vec2 p) {
+                        vec2 i = floor(p);
+                        vec2 f = fract(p);
+                        vec2 u = f * f * (3.0 - 2.0 * f);
+                        return mix(mix(hash(i + vec2(0.0,0.0)), hash(i + vec2(1.0,0.0)), u.x),
+                                   mix(hash(i + vec2(0.0,1.0)), hash(i + vec2(1.0,1.0)), u.x), u.y);
+                    }
+
+                    void main() {
+                        vUv = uv;
+                        vec3 pos = position;
+                        float angle = atan(pos.z, pos.x);
+                        
+                        float n = noise(vec2(angle * 3.0 + time * 0.04, pos.y * 0.0008 - time * 0.02));
+                        float waveX = sin(angle * 4.0 + time * 0.12) * 450.0;
+                        float waveZ = cos(angle * 2.5 - time * 0.08) * 450.0;
+                        
+                        pos.x += sin(angle) * n * 500.0 + waveX * uv.y;
+                        pos.z += cos(angle) * n * 500.0 + waveZ * uv.y;
+                        pos.y += sin(angle * 2.5 + time * 0.18) * 140.0 * (1.0 - uv.y);
+
+                        vHeightFactor = uv.y;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    varying vec2 vUv;
+                    varying float vHeightFactor;
+                    uniform float time;
+                    uniform float uIntensity;
+                    void main() {
+                        float verticalFade = smoothstep(0.0, 0.08, vHeightFactor) * smoothstep(1.0, 0.45, vHeightFactor);
+                        float angle = vUv.x * 6.28318530718;
+                        float halfSideFade = smoothstep(0.0, 0.25, angle) * smoothstep(3.14159265359, 2.4, angle);
+                        
+                        vec3 deepTeal    = vec3(0.02, 0.55, 0.75);
+                        vec3 brightGreen = vec3(0.05, 0.95, 0.55);
+                        vec3 softViolet  = vec3(0.55, 0.12, 0.85);
+                        
+                        vec3 col = mix(deepTeal, brightGreen, smoothstep(0.1, 0.5, vHeightFactor));
+                        col = mix(col, softViolet, smoothstep(0.5, 0.9, vHeightFactor));
+                        
+                        float intensity = verticalFade * halfSideFade * uIntensity;
+                        gl_FragColor = vec4(col * 1.5, intensity);
+                    }
+                `,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                side: THREE.DoubleSide,
+                depthWrite: false
+            });
+
+            auroraMesh = new THREE.Mesh(auroraGeo, auroraMat);
+            auroraMesh.position.set(0, 1500, -3200);
+            auroraMesh.rotation.y = Math.PI * 1.5;
+            scene.add(auroraMesh);
+        }
+
+        // ════════════════════════════════════════════
+        //  PHOTOREALISTIC REFLECTIVE OCEAN
+        // ════════════════════════════════════════════
+        function createOcean() {
+            const waterGeometry = new THREE.PlaneGeometry(28000, 28000);
+
+            // Procedural realistic normal texture for ripples
+            const canvasNormals = document.createElement('canvas');
+            canvasNormals.width = 512;
+            canvasNormals.height = 512;
+            const ctx = canvasNormals.getContext('2d');
+            for (let i = 0; i < 512; i += 16) {
+                for (let j = 0; j < 512; j += 16) {
+                    ctx.fillStyle = `rgb(${128 + Math.random() * 24}, ${128 + Math.random() * 24}, 255)`;
+                    ctx.fillRect(i, j, 16, 16);
+                }
+            }
+            const waterNormals = new THREE.CanvasTexture(canvasNormals);
+            waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
+
+            water = new Water(waterGeometry, {
+                textureWidth: 512,
+                textureHeight: 512,
+                waterNormals: waterNormals,
+                sunDirection: new THREE.Vector3(3800, 2450, -4500).normalize(),
+                sunColor: 0xe6f2ff,
+                waterColor: 0x000a18,
+                distortionScale: 0.65,
+                fog: scene.fog !== undefined
+            });
+            water.rotation.x = -Math.PI / 2;
+            water.position.y = 0;
+            scene.add(water);
+        }
+
+        // ════════════════════════════════════════════
+        //  FLOATING WISH LANTERNS ON THE OCEAN
+        // ════════════════════════════════════════════
+        function createLanternTexture() {
+            const canvas2d = document.createElement('canvas');
+            canvas2d.width = 128;
+            canvas2d.height = 128;
+            const ctx = canvas2d.getContext('2d');
+
+            const grad = ctx.createLinearGradient(0, 0, 0, 128);
+            grad.addColorStop(0, '#fff4cc');
+            grad.addColorStop(0.35, '#ffaa33');
+            grad.addColorStop(0.75, '#ff4400');
+            grad.addColorStop(1, '#660000');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 128, 128);
+
+            // Internal flame core
+            const rad = ctx.createRadialGradient(64, 75, 0, 64, 75, 45);
+            rad.addColorStop(0, 'rgba(255, 255, 230, 0.95)');
+            rad.addColorStop(0.5, 'rgba(255, 180, 50, 0.6)');
+            rad.addColorStop(1, 'rgba(255, 80, 0, 0)');
+            ctx.fillStyle = rad;
+            ctx.fillRect(0, 0, 128, 128);
+
+            const tex = new THREE.CanvasTexture(canvas2d);
+            tex.needsUpdate = true;
+            return tex;
+        }
+        const lanternTex = createLanternTexture();
+
+        function spawnWishLantern(x, y, z) {
+            // Keep total lantern count small and serene (max 8)
+            if (lanterns.length >= 8) {
+                const old = lanterns.shift();
+                if (old && old.mesh) {
+                    scene.remove(old.mesh);
+                    old.mesh.geometry.dispose();
+                }
+            }
+
+            const geom = new THREE.CylinderGeometry(6, 8.5, 15, 10);
+            const mat = new THREE.MeshBasicMaterial({
+                map: lanternTex,
+                transparent: true,
+                opacity: 0.88
+            });
+            const mesh = new THREE.Mesh(geom, mat);
+
+            const posX = x !== undefined ? x : (Math.random() - 0.5) * 1400;
+            const posY = y !== undefined ? y : 15 + Math.random() * 180;
+            const posZ = z !== undefined ? z : -300 - Math.random() * 1600;
+
+            mesh.position.set(posX, posY, posZ);
+            scene.add(mesh);
+
+            lanterns.push({
+                mesh,
+                speedY: 0.28 + Math.random() * 0.35,
+                swaySpeed: 0.8 + Math.random() * 0.8,
+                swayRadius: 6 + Math.random() * 8,
+                baseX: posX,
+                baseZ: posZ
+            });
+        }
+
+        function createInitialLanterns() {
+            for (let i = 0; i < 6; i++) {
+                spawnWishLantern();
+            }
+        }
+
+        // ════════════════════════════════════════════
+        //  DRIFTING GLOWING PETALS & STARDUST
+        // ════════════════════════════════════════════
+        function createPetalsTexture() {
+            const c = document.createElement('canvas');
+            c.width = 64; c.height = 64;
+            const ctx = c.getContext('2d');
+            const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 30);
+            grad.addColorStop(0, 'rgba(255, 230, 240, 1.0)');
+            grad.addColorStop(0.35, 'rgba(255, 140, 190, 0.7)');
+            grad.addColorStop(0.7, 'rgba(255, 90, 160, 0.25)');
+            grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 64, 64);
+            const tex = new THREE.CanvasTexture(c);
+            tex.needsUpdate = true;
+            return tex;
+        }
+        const petalTex = createPetalsTexture();
+
+        const petalCount = 600;
+        let petalData = [];
+
+        function createFloatingPetals() {
+            const geom = new THREE.BufferGeometry();
+            const pos = new Float32Array(petalCount * 3);
+
+            for (let i = 0; i < petalCount; i++) {
+                const i3 = i * 3;
+                pos[i3] = (Math.random() - 0.5) * 1200;
+                pos[i3 + 1] = 10 + Math.random() * 120;
+                pos[i3 + 2] = 200 - Math.random() * 1200;
+
+                petalData.push({
+                    vx: 0.15 + Math.random() * 0.25,
+                    vy: -0.05 - Math.random() * 0.08,
+                    vz: -0.15 - Math.random() * 0.2,
+                    swaySpeed: 1.0 + Math.random() * 1.5,
+                    swayAmp: 0.4 + Math.random() * 0.6
+                });
+            }
+
+            geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+
+            const mat = new THREE.PointsMaterial({
+                size: 6.5,
+                map: petalTex,
+                transparent: true,
+                opacity: 0.75,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+
+            floatingPetalsPoints = new THREE.Points(geom, mat);
+            scene.add(floatingPetalsPoints);
+        }
+
+        // ════════════════════════════════════════════
+        //  SHOOTING STARS / METEORS
+        // ════════════════════════════════════════════
+        function spawnShootingStar() {
+            const trailLength = 24;
+            const geom = new THREE.BufferGeometry();
+            const pos = new Float32Array(trailLength * 3);
+            const colors = new Float32Array(trailLength * 3);
+
+            const startX = (Math.random() - 0.5) * 3500 - 1000;
+            const startY = 1600 + Math.random() * 1200;
+            const startZ = -4500 - Math.random() * 2000;
+
+            const velocity = new THREE.Vector3(
+                12.0 + Math.random() * 8.0,
+                -7.0 - Math.random() * 5.0,
+                8.0 + Math.random() * 6.0
+            );
+
+            for (let i = 0; i < trailLength; i++) {
+                pos[i * 3] = startX;
+                pos[i * 3 + 1] = startY;
+                pos[i * 3 + 2] = startZ;
+
+                const a = 1.0 - i / trailLength;
+                colors[i * 3] = 0.9 * a;
+                colors[i * 3 + 1] = 0.95 * a;
+                colors[i * 3 + 2] = 1.0 * a;
+            }
+
+            geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const mat = new THREE.PointsMaterial({
+                size: 7.0,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                vertexColors: true
+            });
+
+            const mesh = new THREE.Points(geom, mat);
+            scene.add(mesh);
+
+            shootingStars.push({
+                mesh,
+                geom,
+                pos,
+                velocity,
+                currentHead: new THREE.Vector3(startX, startY, startZ),
+                life: 0,
+                maxLife: 2.2 + Math.random() * 1.5
+            });
+        }
+
+        setInterval(() => {
+            if (shootingStars.length < 3) {
+                spawnShootingStar();
+            }
+        }, 3600);
+
+        // ════════════════════════════════════════════
+        //  INTERACTIVE CLICK: SPAWN WISH LANTERN
+        // ════════════════════════════════════════════
+        window.addEventListener('pointerdown', (e) => {
+            if (e.target.closest('.top-bar') || e.target.closest('.poetry-container')) return;
+
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2(
+                (e.clientX / window.innerWidth) * 2 - 1,
+                -(e.clientY / window.innerHeight) * 2 + 1
+            );
+            raycaster.setFromCamera(mouse, camera);
+
+            // Intersect water plane at y = 0
+            const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+            const targetPos = new THREE.Vector3();
+            raycaster.ray.intersectPlane(waterPlane, targetPos);
+
+            if (targetPos) {
+                spawnWishLantern(targetPos.x, 8, targetPos.z);
+
+                // Add stardust burst on 2D cursor canvas
+                for (let i = 0; i < 20; i++) {
+                    cursorParticles.push({
+                        x: e.clientX,
+                        y: e.clientY,
+                        vx: (Math.random() - 0.5) * 3.5,
+                        vy: (Math.random() - 0.5) * 3.5 - 1.5,
+                        size: 3.5 + Math.random() * 4.0,
+                        hue: 200 + Math.random() * 50,
+                        life: 1.0
+                    });
+                }
+            }
+        });
+
+        // ════════════════════════════════════════════
+        //  2D CURSOR STARDUST TRAIL
+        // ════════════════════════════════════════════
+        let cursorParticles = [];
+
+        function resizeCursorCanvas() {
+            cCanvas.width = window.innerWidth;
+            cCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCursorCanvas);
+        resizeCursorCanvas();
+
+        window.addEventListener('pointermove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                cursorParticles.push({
+                    x: e.clientX + (Math.random() - 0.5) * 8,
+                    y: e.clientY + (Math.random() - 0.5) * 8,
+                    vx: (Math.random() - 0.5) * 1.0,
+                    vy: -0.6 - Math.random() * 1.0,
+                    size: 2.0 + Math.random() * 3.5,
+                    hue: 205 + Math.random() * 50,
+                    life: 1.0
+                });
+            }
+        });
+
+        function animateCursorParticles() {
+            cCtx.clearRect(0, 0, cCanvas.width, cCanvas.height);
+            for (let i = cursorParticles.length - 1; i >= 0; i--) {
+                const p = cursorParticles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= (p.decay || 0.024);
+                if (p.life <= 0) {
+                    cursorParticles.splice(i, 1);
+                    continue;
+                }
+                cCtx.fillStyle = `hsla(${p.hue}, 100%, 75%, ${p.life})`;
+                cCtx.shadowColor = `hsla(${p.hue}, 100%, 70%, 0.8)`;
+                cCtx.shadowBlur = 8;
+                cCtx.beginPath();
+                cCtx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                cCtx.fill();
+            }
+            requestAnimationFrame(animateCursorParticles);
+        }
+        animateCursorParticles();
+
+        // ════════════════════════════════════════════
+        //  INIT THREE.JS SCENE & POST-PROCESSING
+        // ════════════════════════════════════════════
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x010206);
+            scene.fog = new THREE.FogExp2(0x010206, 0.00028);
+
+            camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 1, 30000);
+            camera.position.set(-350, 75, 450);
+
+            renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                antialias: true,
+                powerPreference: 'high-performance'
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.05;
+
+            // Lights
+            ambientLight = new THREE.AmbientLight(0x182538, 0.85);
+            scene.add(ambientLight);
+
+            moonLight = new THREE.DirectionalLight(0xaad4ff, 2.5);
+            moonLight.position.set(3800, 2450, -4500);
+            scene.add(moonLight);
+
+            // Controls
+            controls = new OrbitControls(camera, canvas);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.04;
+            controls.maxPolarAngle = Math.PI / 2 - 0.01; // Keep camera above water
+            controls.minPolarAngle = Math.PI / 3;
+            controls.minDistance = 60;
+            controls.maxDistance = 1400;
+            controls.target.set(0, 60, -400);
+            controls.enabled = !isTourActive;
+
+            // Bloom pass
+            const renderScene = new RenderPass(scene, camera);
+            const bloomPass = new UnrealBloomPass(
+                new THREE.Vector2(window.innerWidth, window.innerHeight),
+                1.1,   // strength
+                0.45,  // radius
+                0.35   // threshold
+            );
+
+            composer = new EffectComposer(renderer);
+            composer.addPass(renderScene);
+            composer.addPass(bloomPass);
+
+            // Populate World
+            createMoonAndSky();
+            createStars();
+            createAurora();
+            createOcean();
+            createInitialLanterns();
+            createFloatingPetals();
+
+            window.addEventListener('resize', onWindowResize);
+
+            // Tour is permanently active as requested
+            isTourActive = true;
+
+            // Loader dismiss
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.remove(), 1200);
+                }
+            }, 800);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            composer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // ════════════════════════════════════════════
+        //  MAIN ANIMATION LOOP
+        // ════════════════════════════════════════════
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const dt = clock.getDelta();
+            const time = clock.getElapsedTime();
+
+            // 1. Water Ripple Animation
+            if (water) {
+                water.material.uniforms['time'].value += dt * 0.45 * waterSpeedFactor;
+                waterSpeedFactor += (1.0 - waterSpeedFactor) * 0.04;
+            }
+
+            // 1b. Smooth Majestic Moon Scale & Alive Pulse tied to poem
+            const moonBreathe = Math.sin(time * 0.8) * 60;
+            if (moonSprite) {
+                moonSprite.scale.x += (targetMoonScale + moonBreathe - moonSprite.scale.x) * 0.04;
+                moonSprite.scale.y = moonSprite.scale.x;
+            }
+            if (moonGlowSprite) {
+                const glowTarget = targetMoonScale * 1.36 + moonBreathe * 1.3;
+                moonGlowSprite.scale.x += (glowTarget - moonGlowSprite.scale.x) * 0.04;
+                moonGlowSprite.scale.y = moonGlowSprite.scale.x;
+            }
+
+            // 2. Stars and Aurora uniform updates
+            if (starShaderMat) {
+                starShaderMat.uniforms['time'].value = time;
+            }
+            if (auroraMesh) {
+                auroraMesh.material.uniforms['time'].value = time;
+            }
+
+            // 3. Floating Wish Lanterns rising smoothly
+            for (let i = lanterns.length - 1; i >= 0; i--) {
+                const l = lanterns[i];
+                l.mesh.position.y += l.speedY;
+                l.mesh.position.x = l.baseX + Math.sin(time * l.swaySpeed) * l.swayRadius;
+                l.mesh.position.z = l.baseZ + Math.cos(time * l.swaySpeed * 0.8) * (l.swayRadius * 0.6);
+                l.mesh.rotation.y += 0.005;
+
+                // Reset lantern when it floats into deep sky or clean up extra
+                if (l.mesh.position.y > 550) {
+                    if (lanterns.length > 6) {
+                        scene.remove(l.mesh);
+                        l.mesh.geometry.dispose();
+                        lanterns.splice(i, 1);
+                        continue;
+                    } else {
+                        l.mesh.position.y = 8;
+                        l.baseX = (Math.random() - 0.5) * 1400;
+                        l.baseZ = -200 - Math.random() * 1800;
+                    }
+                }
+            }
+
+            // 4. Drifting Petals
+            if (floatingPetalsPoints) {
+                const pAttr = floatingPetalsPoints.geometry.attributes.position;
+                const pos = pAttr.array;
+
+                for (let i = 0; i < petalCount; i++) {
+                    const i3 = i * 3;
+                    const d = petalData[i];
+
+                    pos[i3] += d.vx;
+                    pos[i3 + 1] += d.vy + Math.sin(time * d.swaySpeed) * d.swayAmp;
+                    pos[i3 + 2] += d.vz;
+
+                    if (pos[i3 + 1] < 1.0 || pos[i3] > 700 || pos[i3 + 2] < -1400) {
+                        pos[i3] = (Math.random() - 0.5) * 1200;
+                        pos[i3 + 1] = 60 + Math.random() * 80;
+                        pos[i3 + 2] = 200 - Math.random() * 600;
+                    }
+                }
+                pAttr.needsUpdate = true;
+            }
+
+            // 5. Shooting Stars
+            for (let i = shootingStars.length - 1; i >= 0; i--) {
+                const s = shootingStars[i];
+                s.life += dt;
+                s.currentHead.addScaledVector(s.velocity, dt * 60);
+
+                const pos = s.pos;
+                const count = pos.length / 3;
+                for (let j = count - 1; j > 0; j--) {
+                    pos[j * 3] = pos[(j - 1) * 3];
+                    pos[j * 3 + 1] = pos[(j - 1) * 3 + 1];
+                    pos[j * 3 + 2] = pos[(j - 1) * 3 + 2];
+                }
+                pos[0] = s.currentHead.x;
+                pos[1] = s.currentHead.y;
+                pos[2] = s.currentHead.z;
+
+                s.geom.attributes.position.needsUpdate = true;
+
+                if (s.life >= s.maxLife) {
+                    scene.remove(s.mesh);
+                    s.geom.dispose();
+                    s.mesh.material.dispose();
+                    shootingStars.splice(i, 1);
+                }
+            }
+
+            // 5b. Smoothly morph background sky, ocean, and celestial lighting across realms
+            if (currentRealm) {
+                scene.background.lerp(currentRealm.bg, 0.035);
+                scene.fog.color.lerp(currentRealm.fog, 0.035);
+                if (moonLight) moonLight.color.lerp(currentRealm.moon, 0.035);
+                if (ambientLight) ambientLight.color.lerp(currentRealm.ambient, 0.035);
+                if (water) {
+                    water.material.uniforms['sunColor'].value.lerp(currentRealm.sunColor, 0.035);
+                    water.material.uniforms['waterColor'].value.lerp(currentRealm.waterColor, 0.035);
+                    if (moonSprite) {
+                        water.material.uniforms['sunDirection'].value.copy(moonSprite.position).normalize();
+                    }
+                }
+
+                // Smoothly modulate Aurora Borealis intensity
+                if (auroraMesh && auroraMesh.material.uniforms.uIntensity) {
+                    const curInt = auroraMesh.material.uniforms.uIntensity.value;
+                    const targetInt = currentRealm.auroraIntensity !== undefined ? currentRealm.auroraIntensity : 0.05;
+                    auroraMesh.material.uniforms.uIntensity.value += (targetInt - curInt) * 0.035;
+                }
+
+                // Smoothly adjust Petals size and opacity for petal storms
+                if (floatingPetalsPoints) {
+                    const targetSize = currentRealm.petalSize !== undefined ? currentRealm.petalSize : 6.0;
+                    const targetOp = currentRealm.petalOpacity !== undefined ? currentRealm.petalOpacity : 0.25;
+                    floatingPetalsPoints.material.size += (targetSize - floatingPetalsPoints.material.size) * 0.035;
+                    floatingPetalsPoints.material.opacity += (targetOp - floatingPetalsPoints.material.opacity) * 0.035;
+                }
+
+                // 5c. Smoothly update Moon position to match the realm's perspective
+                if (moonSprite && currentRealm.moonPos) {
+                    moonSprite.position.lerp(currentRealm.moonPos, 0.03);
+                    moonGlowSprite.position.copy(moonSprite.position);
+                }
+            }
+
+            // 6. True 3D Multi-Perspective Cinematic Choreography (Side sweeps, tilting up/down, altitude & angles)
+            if (isTourActive) {
+                tourProgress += dt * 0.035;
+
+                // Subtle organic drift so the shot is alive even while holding perspective
+                const driftX = Math.sin(tourProgress * 0.8) * 35;
+                const driftY = Math.cos(tourProgress * 1.1) * 6;
+                const driftZ = Math.sin(tourProgress * 0.6) * 20;
+
+                const destX = (currentRealm.camPosX !== undefined ? currentRealm.camPosX : 0) + driftX;
+                const destY = (currentRealm.camPosY !== undefined ? currentRealm.camPosY : 45) + driftY;
+                const destZ = (currentRealm.camPosZ !== undefined ? currentRealm.camPosZ : 300) + driftZ;
+
+                camera.position.x += (destX - camera.position.x) * 0.032;
+                camera.position.y += (destY - camera.position.y) * 0.032;
+                camera.position.z += (destZ - camera.position.z) * 0.032;
+
+                const targetLookX = currentRealm.camLookX !== undefined ? currentRealm.camLookX : 300;
+                const targetLookY = currentRealm.camLookY !== undefined ? currentRealm.camLookY : 600;
+                const targetLookZ = currentRealm.camLookZ !== undefined ? currentRealm.camLookZ : -3000;
+
+                const viewTarget = new THREE.Vector3(targetLookX, targetLookY, targetLookZ);
+                lookTarget.lerp(viewTarget, 0.032);
+                camera.lookAt(lookTarget);
+            } else {
+                controls.update();
+            }
+
+            composer.render();
+        }
+
+        // ════════════════════════════════════════════
+        //  BOOT
+        // ════════════════════════════════════════════
+        init();
+        animate();
+    </script>
+</body>
+
+</html>

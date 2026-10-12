@@ -1,0 +1,18 @@
+{
+  "name": "romantic-moonverse",
+  "version": "1.0.0",
+  "description": "Romantic MoonVerse — An Ethereal 3D Ocean of Love Experience",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve . --listen 3000",
+    "dev": "npx -y serve . --listen 3000"
+  },
+  "keywords": [
+    "threejs",
+    "3d",
+    "romantic",
+    "moonverse"
+  ],
+  "author": "",
+  "license": "ISC"
+}
